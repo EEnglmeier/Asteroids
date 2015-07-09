@@ -15,7 +15,9 @@ public class AsteroidMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(gamecontroller.getState() == States.Playing)
-		transform.Translate (-Input.acceleration.x*speedX*Time.deltaTime,Input.acceleration.y+0.4f*speedY*Time.deltaTime , 0);
+		if (gamecontroller.getState () == States.Playing) {
+			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -30, 30), Mathf.Clamp (transform.position.y, -10, 25), Mathf.Clamp (transform.position.z, 0f, 0f));
+			transform.Translate (-Input.acceleration.x * speedX * Time.deltaTime, Input.acceleration.y + 0.4f * speedY * Time.deltaTime, 0);
+		}
 	}
 }

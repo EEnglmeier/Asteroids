@@ -30,13 +30,12 @@ public class Asteroid : MonoBehaviour {
 		transform.position -= new Vector3 (speed * Time.deltaTime, Mathf.Clamp (transform.position.y, 0f, 0f), 0.0f);
 
 		transform.Translate (-Input.acceleration.x*speed*Time.deltaTime,0 , 0);*/
-		if (gamecontroller.getState () == States.Playing) {
-			transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -30, 30), Mathf.Clamp (transform.position.y, -10, 25), Mathf.Clamp (transform.position.z, 0f, 0f));
-		}
+
 		if (gamecontroller.getState () == States.Final && !resetPos) {
 			resetPos = true;
 			transform.position = Vector3.zero;
 		}
+		rig.velocity = Vector3.zero;
 	}
 	void OnCollisionEnter (Collision col){
 		if (col.gameObject.tag == "Rocket") {

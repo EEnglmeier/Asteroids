@@ -133,7 +133,7 @@ MonoBehaviour:
   rocketCount: 1
   initialMass: 6000
   textgameobject: {fileID: 997200092}
-  playTime: 120
+  playTime: 121
   cameraTurnSpeed: .200000003
   cameraMoveSpeed: .5
   stars: {fileID: 1816180163}
@@ -382,7 +382,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 18.7095013
+  m_Radius: 19.6583843
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &900042592
 MonoBehaviour:
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleWait: 0
   scalePerStep: .00200000009
-  xMovePerStep: .100000001
+  xMovePerStep: .0500000007
 --- !u!114 &900042593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597,6 +597,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+  m_StereoMirrorMode: 0
 --- !u!224 &1118943542
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1914,6 +1915,7 @@ MonoBehaviour:
   m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
+  m_RepeatDelay: .5
   m_AllowActivationOnMobileDevice: 0
 --- !u!114 &1980789077
 MonoBehaviour:

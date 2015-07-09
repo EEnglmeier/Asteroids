@@ -38,6 +38,8 @@ public class GameController : MonoBehaviour {
 	private Vector3 earthRadius;
 	public TargetPositions targetPositions;
 	private bool resetAsteroidChild;
+	private float distanceTravlled;
+	private Vector3 oldPosition;
 
 	IEnumerator GameLoop ()
 	{
@@ -57,6 +59,7 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		oldPosition = Vector3.zero;
 		resetAsteroidChild = true;
 		setDummyCoords ();
 		earthRadius = new Vector3 (0, 0, 20);
@@ -100,8 +103,11 @@ public class GameController : MonoBehaviour {
 		if (currentMass < 500) {
 			loadMainMenu();
 		}
-		if(timePlayed <= playTime)
-		earthParent.transform.Rotate(new Vector3(0, Time.deltaTime * -earthRotationSpeed, 0));
+		if (state == States.Playing) {
+			earthParent.transform.Rotate (new Vector3 (0, Time.deltaTime * -earthRotationSpeed, 0));
+			distanceTravlled += Vector3.Distance(asteroidParent.transform.position,oldPosition);
+			oldPosition = asteroidParent.transform.position;
+		}
 	}
 	public void updateMass(){
 		currentMass -= 500;
@@ -212,6 +218,9 @@ public class GameController : MonoBehaviour {
 	}
 	public void startEndGame() {
 		StartCoroutine (EndGame ());
+	}
+	public float getDistanceTravlled(){
+		return distanceTravlled;
 	}
 }
 
