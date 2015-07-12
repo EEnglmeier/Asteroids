@@ -188,8 +188,6 @@ MonoBehaviour:
   m_Script: {fileID: 762677091, guid: ceb5caf00279b4b7ea9e65f14aa8371e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  applicationID: l533adgpDTQ1nCWHUiNfRXTrZz297hzOlRep4ukm
-  dotnetKey: l58I2w87qY2MSdPeedVZwN6ZbAjzlQ82mtfjkoZH
 --- !u!1 &323073350 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100012, guid: 37c91ad7d51fe354b890bf889b39dc77, type: 2}
@@ -585,6 +583,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+  m_StereoMirrorMode: 0
 --- !u!224 &1118943542
 RectTransform:
   m_ObjectHideFlags: 0
@@ -697,8 +696,7 @@ MonoBehaviour:
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Highscore Table
@@ -813,6 +811,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1550511167}
   - 114: {fileID: 1550511166}
+  - 114: {fileID: 1550511168}
   m_Layer: 0
   m_Name: SceneLoader
   m_TagString: Untagged
@@ -843,6 +842,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+--- !u!114 &1550511168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1550511165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daeeb934334e1bf4fa7f3e12feee6181, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1582926444 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 139ae76cdc334224f8a3f13387bf8c13, type: 2}
@@ -1029,8 +1039,7 @@ MonoBehaviour:
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1146,8 +1155,7 @@ MonoBehaviour:
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: AsteroidsPrime
@@ -1332,6 +1340,7 @@ MonoBehaviour:
   m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
+  m_RepeatDelay: .5
   m_AllowActivationOnMobileDevice: 0
 --- !u!114 &1987958993
 MonoBehaviour:

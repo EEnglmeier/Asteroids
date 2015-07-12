@@ -133,7 +133,7 @@ MonoBehaviour:
   rocketCount: 1
   initialMass: 6000
   textgameobject: {fileID: 997200092}
-  playTime: 121
+  playTime: 120.400002
   cameraTurnSpeed: .200000003
   cameraMoveSpeed: .5
   stars: {fileID: 1816180163}
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleWait: 0
   scalePerStep: .00200000009
-  xMovePerStep: .0500000007
+  xMovePerStep: .0989999995
 --- !u!114 &900042593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,8 +442,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e05173be682da4e80ff4c171d35bcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedX: 45
-  speedY: 45
+  speedX: 40
+  speedY: 40
 --- !u!4 &931787986
 Transform:
   m_ObjectHideFlags: 0
