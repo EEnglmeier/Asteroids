@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour {
 	public float initialMass;
 	private float currentMass;
 	public GameObject textgameobject;
+	public GameObject gameOverText;
 	private string mainMenu;
 	private States state;
 	private float timePlayed;
@@ -106,7 +107,7 @@ public class GameController : MonoBehaviour {
 			}
 		}
 		if (currentMass < 500) {
-			loadMainMenu();
+			StartCoroutine(EndGameEarly());
 		}
 		if (state == States.Playing) {
 			earthParent.transform.Rotate (new Vector3 (0, Time.deltaTime * -earthRotationSpeed, 0));
@@ -185,8 +186,16 @@ public class GameController : MonoBehaviour {
 	IEnumerator EndGame()
 	{
 		while (true) {
-			Debug.Log("endgame true");
 			yield return new WaitForSeconds(10.0f);
+			loadMainMenu();
+		}
+	}
+	IEnumerator EndGameEarly()
+	{
+		while (true) {
+			Text text = gameOverText.GetComponent<Text>();
+			text.text = "GAME OVER";
+			yield return new WaitForSeconds(5.0f);
 			loadMainMenu();
 		}
 	}
