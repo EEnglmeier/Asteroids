@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour {
 	public float initialMass;
 	private float currentMass;
 	public GameObject textgameobject;
+	public GameObject gameOverText;
 	private string mainMenu;
 	private States state;
 	private float timePlayed;
@@ -69,9 +70,15 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if (GetLocation.longi != 0 && GetLocation.lat != 0) {
+			longi = GetLocation.longi;
+			lat = GetLocation.lat;
+		} 
+		else {
+			setDummyCoords ();
+		}
 		oldPosition = Vector3.zero;
 		resetAsteroidChild = true;
-		setDummyCoords ();
 		earthRadius = new Vector3 (0, 0, 20);
 		timePlayed = 0;
 		state = States.Playing;
@@ -83,7 +90,6 @@ public class GameController : MonoBehaviour {
 		transformPos(longi, lat);
 		earthParent.transform.Rotate (new Vector3 (-13,4,0));
 		earthParent.transform.position = new Vector3 (450,-135,-600);
-		StartCoroutine (getLocation ());
 		StartCoroutine (GameLoop());
 		this.waitIsOver = false;
 		this.hasSaved = false;
@@ -116,7 +122,7 @@ public class GameController : MonoBehaviour {
 			}
 		}
 		if (currentMass < 500) {
-			loadMainMenu();
+			StartCoroutine(EndGameEarly());
 		}
 		if (state == States.Playing) {
 			earthParent.transform.Rotate (new Vector3 (0, Time.deltaTime * -earthRotationSpeed, 0));
@@ -172,6 +178,7 @@ public class GameController : MonoBehaviour {
 
 	private void transformPos(float longitude, float latitude){
 		Vector3 vec =   Quaternion.AngleAxis(longitude, -Vector3.up) * Quaternion.AngleAxis(latitude, -Vector3.right) * earthRadius;
+
 		/*
 		latitude = (latitude * Mathf.PI) / 180;
 		longitude = (longitude * Mathf.PI) / 180;
@@ -191,38 +198,6 @@ public class GameController : MonoBehaviour {
 		earthParent.transform.rotation *= rot;
 	}
 
-	IEnumerator getLocation()
-	{
-
-		if (!Input.location.isEnabledByUser) {
-			yield break;
-		}
-
-		Input.location.Start();
-
-		int maxWait = 20;
-		while (Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)
-		{
-			yield return new WaitForSeconds(1);
-			maxWait--;
-		}
-		if (maxWait < 1)
-		{
-			Text text = textgameobject.GetComponent<Text>();
-			yield break;
-		}
-		if (Input.location.status == LocationServiceStatus.Failed)
-		{
-			yield break;
-		}
-		else
-		{
-			longi = Input.location.lastData.longitude;
-			lat = Input.location.lastData.latitude;
-		}
-
-		Input.location.Stop();
-	}
 
 	IEnumerator EndGame()
 	{
@@ -232,6 +207,7 @@ public class GameController : MonoBehaviour {
 		inputCanvas.gameObject.SetActive (true);
 		/*
 		while (true) {
+<<<<<<< HEAD
 			//Debug.Log("endgame true");
 
 			// get the highscores from parse
@@ -246,6 +222,8 @@ public class GameController : MonoBehaviour {
 			});
 
 			// wait for the collision animation to end
+=======
+>>>>>>> 7e54facb60aa59d28b78f853b1f81bec7ecbdc45
 			yield return new WaitForSeconds(10.0f);
 			//this.waitIsOver = true;
 			//presentHighscoreTable();
@@ -254,6 +232,15 @@ public class GameController : MonoBehaviour {
 		}
 		*/
 
+	}
+	IEnumerator EndGameEarly()
+	{
+		while (true) {
+			Text text = gameOverText.GetComponent<Text>();
+			text.text = "GAME OVER";
+			yield return new WaitForSeconds(5.0f);
+			loadMainMenu();
+		}
 	}
 	public void startEndGame() {
 		StartCoroutine (EndGame ());
