@@ -37,6 +37,7 @@ public class EarthCollision : MonoBehaviour {
 			}
 			gamecontroller.startEndGame();
 			Destroy(col.gameObject);
+
 		}
 	}
 }

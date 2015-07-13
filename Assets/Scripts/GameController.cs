@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Parse;
 
 public enum States{
 	Playing,Final
@@ -40,6 +43,13 @@ public class GameController : MonoBehaviour {
 	private bool resetAsteroidChild;
 	private float distanceTravlled;
 	private Vector3 oldPosition;
+	public Font myFont;
+	public Text distanceText;
+	bool waitIsOver;
+	IEnumerable<ParseObject> myHighscoreObjects;
+	public Canvas inputCanvas;
+	public Canvas highscoreCanvas;
+	bool hasSaved;
 
 	IEnumerator GameLoop ()
 	{
@@ -69,11 +79,16 @@ public class GameController : MonoBehaviour {
 		currentMass = initialMass;
 		Text text = textgameobject.GetComponent<Text>();
 		text.text = "Mass: "+currentMass;
+		this.distanceText.text = "Distance: 0";
 		transformPos(longi, lat);
 		earthParent.transform.Rotate (new Vector3 (-13,4,0));
 		earthParent.transform.position = new Vector3 (450,-135,-600);
 		StartCoroutine (getLocation ());
 		StartCoroutine (GameLoop());
+		this.waitIsOver = false;
+		this.hasSaved = false;
+		inputCanvas.gameObject.SetActive (false);
+		highscoreCanvas.gameObject.SetActive (false);
 	}
 	
 	// Update is called once per frame
@@ -107,6 +122,7 @@ public class GameController : MonoBehaviour {
 			earthParent.transform.Rotate (new Vector3 (0, Time.deltaTime * -earthRotationSpeed, 0));
 			distanceTravlled += Vector3.Distance(asteroidParent.transform.position,oldPosition);
 			oldPosition = asteroidParent.transform.position;
+			this.distanceText.text = "Distance: " + distanceTravlled.ToString("0");
 		}
 	}
 	public void updateMass(){
@@ -210,17 +226,135 @@ public class GameController : MonoBehaviour {
 
 	IEnumerator EndGame()
 	{
+		// wait for some seconds (explosion woohoo!) before...
+		yield return new WaitForSeconds (5.0f);
+		// ...presenting the canvas with the input fields
+		inputCanvas.gameObject.SetActive (true);
+		/*
 		while (true) {
-			Debug.Log("endgame true");
+			//Debug.Log("endgame true");
+
+			// get the highscores from parse
+			var query = ParseObject.GetQuery ("Highscore")
+				.OrderByDescending ("mass")
+					.ThenBy ("distance")
+					.Limit (10);
+			query.FindAsync ().ContinueWith (t => {
+				myHighscoreObjects = t.Result;
+				Debug.Log ("highscores downloaded");
+				this.waitIsOver = true;
+			});
+
+			// wait for the collision animation to end
 			yield return new WaitForSeconds(10.0f);
+			//this.waitIsOver = true;
+			//presentHighscoreTable();
+
 			loadMainMenu();
 		}
+		*/
+
 	}
 	public void startEndGame() {
 		StartCoroutine (EndGame ());
 	}
 	public float getDistanceTravlled(){
 		return distanceTravlled;
+	}
+
+	IEnumerator waitAgain()
+	{
+		yield return new WaitForSeconds (0.5f);
+		presentHighscoreTable ();
+	}
+
+	public void presentHighscoreTable() {
+		inputCanvas.gameObject.SetActive (false);
+		highscoreCanvas.gameObject.SetActive (true);
+		if (hasSaved) {
+			// get the highscores from parse
+			var query = ParseObject.GetQuery ("Highscore")
+				.OrderByDescending ("mass")
+					.ThenBy ("distance")
+					.Limit (10);
+			query.FindAsync ().ContinueWith (t => {
+				myHighscoreObjects = t.Result;
+				Debug.Log ("highscores downloaded");
+				this.waitIsOver = true;
+			});
+			
+			presentTheHighscores ();
+		} else {
+			StartCoroutine (waitAgain ());
+		}
+		
+	}
+
+	public void sendInputToParse() {
+
+		Debug.Log ("input to parse");
+		GameObject myInputObject = GameObject.Find("NameText");
+		GameObject myPlaceholderObject = GameObject.Find ("Placeholder");
+		Text myInputText, myPlaceholder;
+		if (myInputObject != null) {
+			Debug.Log("input text not null");
+			myInputText = myInputObject.GetComponent<Text>();
+			string myInput = myInputText.text;
+			if (myInput != "") {
+				//Debug.Log("input string not null: " + myInput);
+				ParseObject newHighscore = new ParseObject("Highscore");
+				newHighscore["mass"] = this.currentMass;
+				newHighscore["distance"] = this.distanceTravlled;
+				newHighscore["name"] = myInput;
+				
+				// set the access control list of the new object to read-only
+				newHighscore.ACL = new ParseACL()
+				{
+					PublicReadAccess = true
+				};
+				
+				/*Task saveTask = */newHighscore.SaveAsync().ContinueWith(t => {
+					this.hasSaved = true;
+				});
+				
+				presentHighscoreTable();
+			} else {
+				myPlaceholder = myPlaceholderObject.GetComponent<Text>();
+				myPlaceholder.color = Color.red;
+			}
+		}
+	}
+
+	IEnumerator waitForHighscores()
+	{
+		yield return new WaitForSeconds (0.5f);
+		presentTheHighscores ();
+	}
+
+	public void presentTheHighscores() {
+
+		if (this.waitIsOver) {
+			// present a "table" with the highscores and the own result (max. 10 highscores)
+
+			GameObject myTextObject = GameObject.Find("HighscoreText");
+			Text myText;
+			if (myTextObject != null) {
+				myText = myTextObject.GetComponent<Text>();
+				myText.text = "Player" + "        \t| \t" + "Mass" + "\t | \t" + "Distance" + "\n" + "--------------------------------------------------" + "\n";
+				foreach (var myObject in myHighscoreObjects) {
+					string playerName = myObject["name"].ToString();
+					playerName = playerName.PadRight(15);
+					string subDistance = myObject["distance"].ToString();
+					subDistance = subDistance.Split('.')[0];
+					myText.text = myText.text + /*myObject ["name"]*/playerName + "  \t" + myObject ["mass"] + "\t   \t" + /*myObject["distance"]*/ subDistance + "\n";
+				}
+			}
+
+			Debug.Log("highscores: " + myHighscoreObjects);
+		} else {
+			Debug.Log ("wait not yet over");
+			StartCoroutine(waitForHighscores());
+		}
 	}
 }
 

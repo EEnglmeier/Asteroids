@@ -21,15 +21,9 @@ public class HighscoreResults : MonoBehaviour {
 				.ThenBy ("distance")
 				.Limit (10);
 		query.FindAsync ().ContinueWith (t => {
-			//IEnumerable<ParseObject> highscores = t.Result;
 			highscores = t.Result;
 			gotThem = true;
-			/*
-			highscoreTableText.text = "";
-			foreach (var highscore in highscores) {
-				highscoreTableText.text = highscoreTableText.text + highscore["name"] + "\t|\t" + highscore["mass"] + "\n";
-			}
-			*/
+
 		});
 	
 	}
@@ -37,9 +31,14 @@ public class HighscoreResults : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (gotThem) {
-			highscoreTableText.text = "";
+			//highscoreTableText.text = "";
+			highscoreTableText.text = "Player" + "        \t| \t" + "Mass" + "\t | \t" + "Distance" + "\n" + "----------------------------------------------" + "\n";
 			foreach (var highscore in highscores) {
-				highscoreTableText.text = highscoreTableText.text + highscore ["name"] + "\t|\t" + highscore ["mass"] + "\n";
+				string playerName = highscore["name"].ToString();
+				playerName = playerName.PadRight(15);
+				string subDistance = highscore["distance"].ToString();
+				subDistance = subDistance.Split('.')[0];
+				highscoreTableText.text = highscoreTableText.text + playerName + "  \t" + highscore ["mass"] + "\t \t" + subDistance + "\n";
 			}
 			gotThem = false;
 		}
