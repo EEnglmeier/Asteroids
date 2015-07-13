@@ -199,12 +199,8 @@ MonoBehaviour:
   rocketCount: 1
   initialMass: 6000
   textgameobject: {fileID: 997200092}
-<<<<<<< HEAD
-  playTime: 10
-=======
   gameOverText: {fileID: 1106978307}
   playTime: 120.400002
->>>>>>> 7e54facb60aa59d28b78f853b1f81bec7ecbdc45
   cameraTurnSpeed: .200000003
   cameraMoveSpeed: .5
   stars: {fileID: 1816180163}
@@ -301,13 +297,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 997200093}
-<<<<<<< HEAD
   - {fileID: 829821566}
   - {fileID: 521846230}
   - {fileID: 345781268}
-=======
   - {fileID: 1106978308}
->>>>>>> 7e54facb60aa59d28b78f853b1f81bec7ecbdc45
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_AnchorMin: {x: 0, y: 0}
@@ -1199,7 +1192,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 342700572}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 0, y: 0}

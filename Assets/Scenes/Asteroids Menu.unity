@@ -188,6 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 762677091, guid: 7c5df6eb4d8f2784b9a13094679792b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  applicationID: l533adgpDTQ1nCWHUiNfRXTrZz297hzOlRep4ukm
+  dotnetKey: l58I2w87qY2MSdPeedVZwN6ZbAjzlQ82mtfjkoZH
 --- !u!1 &323073350 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100012, guid: 37c91ad7d51fe354b890bf889b39dc77, type: 2}
@@ -583,7 +585,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
-  m_StereoMirrorMode: 0
 --- !u!224 &1118943542
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1340,7 +1341,6 @@ MonoBehaviour:
   m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
-  m_RepeatDelay: .5
   m_AllowActivationOnMobileDevice: 0
 --- !u!114 &1987958993
 MonoBehaviour:
